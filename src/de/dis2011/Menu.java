@@ -6,20 +6,20 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
- * Kleine Helferklasse für Menüs
- * Zuvor müssen mit addEntry Menüoptionen hinzugefügt werden. Mit
- * der Methode show() wird das Menü angezeigt und die mit der Option
+ * Kleine Helferklasse für Menüs   											Little helper class for menus
+ * Zuvor müssen mit addEntry Menüoptionen hinzugefügt werden. 				You must first add menu options with addEntry.
+ * Mit der Methode show() wird das Menü angezeigt und die mit der Option    The show () method displays the menu and returns the constant specified by the option.
  * angegebene Konstante zurückgeliefert.
  * 
- * Beispiel:
- * Menu m = new Menu("Hauptmenü");
- * m.addEntry("Hart arbeiten", 0);
- * m.addEntry("Ausruhen", 1);
- * m.addEntry("Nach Hause gehen", 2);
- * int wahl = m.show();
+ * Beispiel:																example
+ * Menu m = new Menu("Hauptmenü");											Menu m = new Menu("main menu");
+ * m.addEntry("Hart arbeiten", 0);											m.addEntry("Hard work", 0);
+ * m.addEntry("Ausruhen", 1);												m.addEntry("relax", 1);
+ * m.addEntry("Nach Hause gehen", 2);										m.addEntry("Go home", 2);
+ * int wahl = m.show();														int choice = m.show();
  * 
- * Angezeigt wird dann das Menü:
- * Hauptmenü:
+ * Angezeigt wird dann das Menü:											The menu will be displayed:
+ * Hauptmenü:																main menu
  * [1] Hart arbeiten
  * [2] Ausruhen
  * [3] Nach Hause gehen
@@ -40,9 +40,9 @@ public class Menu {
 	}
 	
 	/**
-	 * Fügt einen Menüeintrag zum Menü hinzu
-	 * @param label Name des Eintrags
-	 * @param returnValue Konstante, die bei Wahl dieses Eintrags zurückgegeben wird
+	 * Fügt einen Menüeintrag zum Menü hinzu											Adds a menu item to the menu
+	 * @param label Name des Eintrags													label Name of the entry
+	 * @param returnValue Konstante, die bei Wahl dieses Eintrags zurückgegeben wird	returnValue Constant returned when this entry is selected
 	 */
 	public void addEntry(String label, int returnValue) {
 		this.labels.add(label);
@@ -50,8 +50,8 @@ public class Menu {
 	}
 	
 	/**
-	 * Zeigt das Menü an
-	 * @return Die Konstante des ausgewählten Menüeintrags
+	 * Zeigt das Menü an																Displays the menu
+	 * @return Die Konstante des ausgewählten Menüeintrags								The constant of the selected menu item
 	 */
 	public int show()  {
 		int selection = -1;
@@ -75,7 +75,7 @@ public class Menu {
 			}
 			
 			if(selection < 1 || selection > returnValues.size()) {
-				System.err.println("Ungültige Eingabe!");
+				System.err.println("Ungültige Eingabe!");				// invalid input
 				selection = -1;
 			} 
 		}

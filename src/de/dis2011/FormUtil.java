@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Kleine Helferklasse zum Einlesen von Formulardaten
+ * Kleine Helferklasse zum Einlesen von Formulardaten			Small helper class for reading form data
  */
 public class FormUtil {
 	/**
-	 * Liest einen String vom standard input ein
-	 * @param label Zeile, die vor der Eingabe gezeigt wird
-	 * @return eingelesene Zeile
+	 * Liest einen String vom standard input ein				Reads a string from the standard input
+	 * @param label Zeile, die vor der Eingabe gezeigt wird		label line that is shown before entering
+	 * @return eingelesene Zeile								read line
 	 */
 	public static String readString(String label) {
 		String ret = null;

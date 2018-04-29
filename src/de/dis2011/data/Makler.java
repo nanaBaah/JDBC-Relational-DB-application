@@ -66,21 +66,24 @@ public class Makler {
 	}
 	
 	/**
+	 * Loads a broker from the database
+	 * id ID of the broker to load
+	 * 
 	 * Lädt einen Makler aus der Datenbank
 	 * @param id ID des zu ladenden Maklers
 	 * @return Makler-Instanz
 	 */
 	public static Makler load(int id) {
 		try {
-			// Hole Verbindung
+			// Hole Verbindung			Get connected
 			Connection con = DB2ConnectionManager.getInstance().getConnection();
 
-			// Erzeuge Anfrage
+			// Erzeuge Anfrage			Create request
 			String selectSQL = "SELECT * FROM makler WHERE id = ?";
 			PreparedStatement pstmt = con.prepareStatement(selectSQL);
 			pstmt.setInt(1, id);
 
-			// Führe Anfrage aus
+			// Führe Anfrage aus			Execute request
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				Makler ts = new Makler();
@@ -101,6 +104,10 @@ public class Makler {
 	}
 	
 	/**
+	 * Saves the broker in the database.
+	 * If no ID has yet been assigned, the generated id is fetched from DB2 
+	 * and passed to the model.
+	 * 
 	 * Speichert den Makler in der Datenbank. Ist noch keine ID vergeben
 	 * worden, wird die generierte Id von DB2 geholt und dem Model übergeben.
 	 */
@@ -109,16 +116,20 @@ public class Makler {
 		Connection con = DB2ConnectionManager.getInstance().getConnection();
 
 		try {
-			// FC<ge neues Element hinzu, wenn das Objekt noch keine ID hat.
+			// FC<ge neues Element hinzu, wenn das Objekt noch keine ID hat. 
+			// Add a new element if the object does not already have an ID
 			if (getId() == -1) {
 				// Achtung, hier wird noch ein Parameter mitgegeben,
 				// damit spC$ter generierte IDs zurC<ckgeliefert werden!
+				// Attention, here a parameter is given, 
+				// so that later generated IDs are returned!
 				String insertSQL = "INSERT INTO makler(name, address, login, password) VALUES (?, ?, ?, ?)";
 
 				PreparedStatement pstmt = con.prepareStatement(insertSQL,
 						Statement.RETURN_GENERATED_KEYS);
 
 				// Setze Anfrageparameter und fC<hre Anfrage aus
+				// Set request parameters and execute request
 				pstmt.setString(1, getName());
 				pstmt.setString(2, getAddress());
 				pstmt.setString(3, getLogin());
@@ -126,6 +137,7 @@ public class Makler {
 				pstmt.executeUpdate();
 
 				// Hole die Id des engefC<gten Datensatzes
+				// Get the id of the tight set
 				ResultSet rs = pstmt.getGeneratedKeys();
 				if (rs.next()) {
 					setId(rs.getInt(1));
@@ -135,10 +147,12 @@ public class Makler {
 				pstmt.close();
 			} else {
 				// Falls schon eine ID vorhanden ist, mache ein Update...
+				// If an ID already exists, make an update ...
 				String updateSQL = "UPDATE makler SET name = ?, address = ?, login = ?, password = ? WHERE id = ?";
 				PreparedStatement pstmt = con.prepareStatement(updateSQL);
 
 				// Setze Anfrage Parameter
+				// Set request parameters
 				pstmt.setString(1, getName());
 				pstmt.setString(2, getAddress());
 				pstmt.setString(3, getLogin());

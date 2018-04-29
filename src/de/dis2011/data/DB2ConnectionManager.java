@@ -44,6 +44,7 @@ public class DB2ConnectionManager {
 			// Verbindung zur DB2 herstellen
 			Class.forName("com.ibm.db2.jcc.DB2Driver");
 			_con = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPass);
+			
 
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();

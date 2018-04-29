@@ -23,10 +23,10 @@ public class Main {
 		
 		//Erzeuge Menü
 		Menu mainMenu = new Menu("Hauptmenü");
-		mainMenu.addEntry("Makler-Verwaltung", MENU_MAKLER);
+		mainMenu.addEntry("Makler-Verwaltung", MENU_MAKLER);				// Broker Management
 		mainMenu.addEntry("Beenden", QUIT);
 		
-		//Verarbeite Eingabe
+		//Verarbeite Eingabe												// Process input
 		while(true) {
 			int response = mainMenu.show();
 			

@@ -1,72 +1,72 @@
 create table estate_agents (
-id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
-name varchar(255) NOT NULL,
-address varchar(255) NOT NULL,
-login varchar(50) UNIQUE NOT NULL,
-password varchar(50) UNIQUE NOT NULL
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
+	name varchar(255),
+	address varchar(255),
+	login varchar(50) UNIQUE,
+	password varchar(50) UNIQUE
 );
 
 create table estates (
-id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
-city varchar(255),
-postal_code integer,
-street varchar(255),
-street_number integer,
-square_number double,
-fk_estate_agent_id integer NOT NULL,
-FOREIGN KEY (fk_estate_agent_id) references estate_agents(id)
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
+	city varchar(255),
+	postal_code integer,
+	street varchar(255),
+	street_number integer,
+	square_number double,
+	fk_estate_agent_id integer NOT NULL,
+	FOREIGN KEY (fk_estate_agent_id) references estate_agents(id)
 );
 
 
 create table apartments (
-fk_estate_id integer PRIMARY KEY NOT NULL,
-floor integer,
-rent double,
-room integer,
-balcony char(1),
-kitchen char(1),
-FOREIGN KEY (fk_estate_id) references estates(id)
+	fk_estate_id integer PRIMARY KEY NOT NULL,
+	floor integer,
+	rent double,
+	room integer,
+	balcony char(1),
+	kitchen char(1),
+	FOREIGN KEY (fk_estate_id) references estates(id)
 ); 
 
 create table houses (
-fk_estate_id integer PRIMARY KEY NOT NULL,
-number_of_floors integer,
-price double,
-garden char(1),
-FOREIGN KEY (fk_estate_id) references estates(id)
+	fk_estate_id integer PRIMARY KEY NOT NULL,
+	number_of_floors integer,
+	price double,
+	garden char(1),
+	FOREIGN KEY (fk_estate_id) references estates(id)
 );
 
 create table persons (
-id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
-first_name varchar(255),
-last_name varchar(255),
-address varchar(255)
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
+	first_name varchar(255),
+	last_name varchar(255),
+	address varchar(255)
 );
 
 create table contracts (
-id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
-contract_date date,
-place varchar(255),
-fk_person_id integer NOT NULL,
-FOREIGN KEY (fk_person_id) references persons(id)
+	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
+	contract_date date,
+	place varchar(255),
+	fk_person_id integer NOT NULL,
+	FOREIGN KEY (fk_person_id) references persons(id)
 );
 
 create table purchase_contracts (
-fk_contract_id integer NOT NULL PRIMARY KEY,
-number_of_installment integer,
-interest_rate double,
-fk_house_id integer NOT NULL,
-FOREIGN KEY (fk_contract_id) references contracts(id),
-FOREIGN KEY (fk_house_id) references houses(fk_estate_id)
+	fk_contract_id integer NOT NULL PRIMARY KEY,
+	number_of_installment integer,
+	interest_rate double,
+	fk_house_id integer NOT NULL,
+	FOREIGN KEY (fk_contract_id) references contracts(id),
+	FOREIGN KEY (fk_house_id) references houses(fk_estate_id)
 );
 
 create table tenancy_contract (
-fk_contract_id integer NOT NULL PRIMARY KEY,
-start_date date,
-duration time,
-additional_cost double,
-fk_apartment_id integer NOT NULL,
-FOREIGN KEY (fk_contract_id) references contracts(id),
-FOREIGN KEY (fk_apartment_id) references apartments(fk_estate_id)
+	fk_contract_id integer NOT NULL PRIMARY KEY,
+	start_date date,
+	duration time,
+	additional_cost double,
+	fk_apartment_id integer NOT NULL,
+	FOREIGN KEY (fk_contract_id) references contracts(id),
+	FOREIGN KEY (fk_apartment_id) references apartments(fk_estate_id)
 );
 
