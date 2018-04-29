@@ -167,4 +167,33 @@ public class Makler {
 		}
 	}
 	
+	public static boolean delete(int id) {
+		String sql = "DELETE FROM maklers WHERE id = ?";
+		
+		try {
+			Connection conn = DB2ConnectionManager.getInstance().getConnection();
+			
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            
+            int affected = preparedStatement.executeUpdate();
+            
+            return (affected == 1) ? true : false;
+			
+		} catch (SQLException e) {
+			System.err.println(e);
+			return false;
+		}
+		
+	}
+	
+	@Override
+	public String toString() {
+		return "ID : " + getId() + "\n" + 
+				"Name : " + getName() + "\n" + 
+				"Address : " + getAddress() + "\n" + 
+				"Login : " + getLogin() + "\n" + 
+				"Password : " + getPassword() + "\n";
+	}
+	
 }
