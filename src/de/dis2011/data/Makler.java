@@ -79,7 +79,7 @@ public class Makler {
 			Connection con = DB2ConnectionManager.getInstance().getConnection();
 
 			// Erzeuge Anfrage			Create request
-			String selectSQL = "SELECT * FROM makler WHERE id = ?";
+			String selectSQL = "SELECT * FROM maklers WHERE id = ?";
 			PreparedStatement pstmt = con.prepareStatement(selectSQL);
 			pstmt.setInt(1, id);
 
@@ -123,7 +123,7 @@ public class Makler {
 				// damit spC$ter generierte IDs zurC<ckgeliefert werden!
 				// Attention, here a parameter is given, 
 				// so that later generated IDs are returned!
-				String insertSQL = "INSERT INTO makler(name, address, login, password) VALUES (?, ?, ?, ?)";
+				String insertSQL = "INSERT INTO maklers(name, address, login, password) VALUES (?, ?, ?, ?)";
 
 				PreparedStatement pstmt = con.prepareStatement(insertSQL,
 						Statement.RETURN_GENERATED_KEYS);
@@ -148,7 +148,7 @@ public class Makler {
 			} else {
 				// Falls schon eine ID vorhanden ist, mache ein Update...
 				// If an ID already exists, make an update ...
-				String updateSQL = "UPDATE makler SET name = ?, address = ?, login = ?, password = ? WHERE id = ?";
+				String updateSQL = "UPDATE maklers SET name = ?, address = ?, login = ?, password = ? WHERE id = ?";
 				PreparedStatement pstmt = con.prepareStatement(updateSQL);
 
 				// Setze Anfrage Parameter
@@ -166,4 +166,5 @@ public class Makler {
 			e.printStackTrace();
 		}
 	}
+	
 }

@@ -1,11 +1,15 @@
-create table estate_agents (
-	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
+
+CREATE TABLE maklers (
+	id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
 	name varchar(255),
 	address varchar(255),
-	login varchar(50) UNIQUE,
-	password varchar(50) UNIQUE
+	login varchar(40) NOT NULL UNIQUE,
+	password varchar(40)
 );
 
+
+DROP table estates;
+ 
 create table estates (
 	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
 	city varchar(255),
@@ -13,10 +17,12 @@ create table estates (
 	street varchar(255),
 	street_number integer,
 	square_number double,
-	fk_estate_agent_id integer NOT NULL,
-	FOREIGN KEY (fk_estate_agent_id) references estate_agents(id)
+	fk_makler_id integer NOT NULL,
+	FOREIGN KEY (fk_makler_id) references maklers(id)
 );
 
+
+DROP table apartments;
 
 create table apartments (
 	fk_estate_id integer PRIMARY KEY NOT NULL,
@@ -26,7 +32,10 @@ create table apartments (
 	balcony char(1),
 	kitchen char(1),
 	FOREIGN KEY (fk_estate_id) references estates(id)
-); 
+);
+
+
+DROP table houses;
 
 create table houses (
 	fk_estate_id integer PRIMARY KEY NOT NULL,
@@ -36,12 +45,18 @@ create table houses (
 	FOREIGN KEY (fk_estate_id) references estates(id)
 );
 
+
+DROP table persons;
+
 create table persons (
 	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
 	first_name varchar(255),
 	last_name varchar(255),
 	address varchar(255)
 );
+
+
+DROP table contracts;
 
 create table contracts (
 	id integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1, NO CACHE) PRIMARY KEY,
@@ -50,6 +65,9 @@ create table contracts (
 	fk_person_id integer NOT NULL,
 	FOREIGN KEY (fk_person_id) references persons(id)
 );
+
+
+DROP table purchase_contracts;
 
 create table purchase_contracts (
 	fk_contract_id integer NOT NULL PRIMARY KEY,
@@ -60,7 +78,10 @@ create table purchase_contracts (
 	FOREIGN KEY (fk_house_id) references houses(fk_estate_id)
 );
 
-create table tenancy_contract (
+
+DROP table tenancy_contracts;
+
+create table tenancy_contracts (
 	fk_contract_id integer NOT NULL PRIMARY KEY,
 	start_date date,
 	duration time,
