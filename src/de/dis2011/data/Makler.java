@@ -187,6 +187,41 @@ public class Makler {
 		
 	}
 	
+	public static Makler login(String login, String password) {
+		
+		String sql = "SELECT * FROM maklers WHERE login = ?";
+		
+		try {
+			Connection con = DB2ConnectionManager.getInstance().getConnection();
+			
+			PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, login);
+            
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                Makler makler = new Makler();
+
+                makler.setId(rs.getInt("id"));
+                makler.setName(rs.getString("name"));
+                makler.setAddress(rs.getString("address"));
+                makler.setLogin(login);
+                makler.setPassword(rs.getString("password"));
+
+                rs.close();
+                preparedStatement.close();
+
+                if (password.equals(makler.getPassword())) {
+                    return makler;
+                }
+            }
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		return "ID : " + getId() + "\n" + 

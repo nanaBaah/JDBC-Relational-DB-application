@@ -1,6 +1,8 @@
 package de.dis2011.menus;
 
+import de.dis2011.FormUtil;
 import de.dis2011.Menu;
+import de.dis2011.data.Makler;
 
 public class MainMenu {
 	/**
@@ -14,7 +16,7 @@ public class MainMenu {
 		
 		//Erzeuge Menü
 		Menu mainMenu = new Menu("Main Menu");
-		mainMenu.addEntry("Makler-Verwaltung", MENU_MAKLER);				// Broker Management
+		mainMenu.addEntry("Estate Agent Management", MENU_MAKLER);			
 		mainMenu.addEntry("Estate Management", MENU_ESTATE);
 		mainMenu.addEntry("Quit", QUIT);
 		
@@ -27,6 +29,16 @@ public class MainMenu {
 					MaklerMenu.showMaklerMenu();
 					break;
 				case MENU_ESTATE:
+					System.out.println("Please login to Estate Management services:");
+					String login = FormUtil.readString("Login");
+					String password = FormUtil.readString("Password");
+					Makler makler = Makler.login(login, password);
+					
+					if (makler != null) {
+						new EstateMenu(makler).showEstateMenu();
+					} else {
+						System.out.println("Wrong login info");
+					}
 					break;
 				case QUIT:
 					return;

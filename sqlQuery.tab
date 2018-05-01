@@ -16,7 +16,7 @@ create table estates (
 	postal_code integer,
 	street varchar(255),
 	street_number integer,
-	square_number double,
+	square_area double,
 	fk_makler_id integer NOT NULL,
 	FOREIGN KEY (fk_makler_id) references maklers(id)
 );
