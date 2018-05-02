@@ -5,6 +5,8 @@ import de.dis2011.Menu;
 import de.dis2011.data.Makler;
 
 public class MainMenu {
+	
+	private final static String PW = "12345";
 	/**
 	 * Zeigt das Hauptmenü
 	 */
@@ -26,13 +28,19 @@ public class MainMenu {
 			
 			switch(response) {
 				case MENU_MAKLER:
-					MaklerMenu.showMaklerMenu();
+					System.out.println("Please enter admin password for Makler:");
+					String password = FormUtil.readString("Password");
+					if (password.equals(PW)) {
+						MaklerMenu.showMaklerMenu();
+					} else {
+						System.err.println("Wrong password.");
+					}
 					break;
 				case MENU_ESTATE:
 					System.out.println("Please login to Estate Management services:");
 					String login = FormUtil.readString("Login");
-					String password = FormUtil.readString("Password");
-					Makler makler = Makler.login(login, password);
+					String password1 = FormUtil.readString("Password");
+					Makler makler = Makler.login(login, password1);
 					
 					if (makler != null) {
 						new EstateMenu(makler).showEstateMenu();
