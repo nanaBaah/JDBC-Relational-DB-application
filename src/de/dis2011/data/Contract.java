@@ -14,6 +14,7 @@ public class Contract {
 	private Date contractDate;
 	private String place;
 	private int personId;
+	protected Boolean isFlag = false;
 
 	public int getId() {
 		return id;
@@ -81,20 +82,22 @@ public class Contract {
 		
 		try {
 			if (getId() == -1) {
-				String sql = "INSERT INTO contract(contract_date, place, fk_person_id) VALUES (?, ?, ?)";
+				String sql = "INSERT INTO contracts(contract_date, place, fk_person_id) VALUES (?, ?, ?)";
 				
 				PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				
 				pstmt.setDate(1, getContractDate());
 				pstmt.setString(2, getPlace());
 				pstmt.setInt(3, getPersonId());
-				pstmt.executeQuery();
+				pstmt.executeUpdate();
 				
 				ResultSet rs = pstmt.getGeneratedKeys();
 				
 				if (rs.next()) {
 					setId(rs.getInt(1));
 				}
+				
+				isFlag = true;
 				
 				rs.close();
 				pstmt.close();
@@ -106,7 +109,9 @@ public class Contract {
 				pstmt.setString(2, getPlace());
 				pstmt.setInt(3, getPersonId());
 				
-				pstmt.executeQuery();
+				isFlag = false;
+				
+				pstmt.executeUpdate();
 				pstmt.close();
 
 			}

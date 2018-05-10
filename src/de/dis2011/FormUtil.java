@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
+import java.sql.Time;
 
 /**
  * Kleine Helferklasse zum Einlesen von Formulardaten Small helper class for
@@ -103,6 +104,24 @@ public class FormUtil {
 
 			try {
 				ret = Date.valueOf(line);
+				finished = true;
+			} catch (NumberFormatException e) {
+				System.err.println("Input is invalid Date");
+			}
+		}
+
+		return ret;
+	}
+	
+	public static Time readTime(String label) {
+		Time ret = null;
+		boolean finished = false;
+
+		while (!finished) {
+			String line = readString(label);
+
+			try {
+				ret = Time.valueOf(line);
 				finished = true;
 			} catch (NumberFormatException e) {
 				System.err.println("Input is invalid Date");

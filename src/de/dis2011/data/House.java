@@ -56,7 +56,6 @@ public class House extends Estate {
 				house.setStreet(estate.getStreet());
 				house.setStreetNumber(estate.getStreetNumber());
 				house.setSquareArea(estate.getSquareArea());
-				house.setFkMaklerId(estate.getFkMaklerId());
 				house.setNumberOfFloors(rs.getInt("number_of_floors"));
 				house.setPrice(rs.getDouble("price"));
 				house.setGarden(rs.getBoolean("garden"));
@@ -76,30 +75,33 @@ public class House extends Estate {
 		super.save();
 		Connection con = DB2ConnectionManager.getInstance().getConnection();
 		try {
-			if (getId() == -1) {
+			if (isFlag) {
 				String insertSQL = "INSERT INTO houses(fk_estate_id, number_of_floors, price, garden) VALUES (?, ?, ?, ?)";
 				
 				PreparedStatement pstmt = con.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
 				
-				pstmt.setInt(1, getFkMaklerId());
+				pstmt.setInt(1, getId());
 				pstmt.setInt(2, getNumberOfFloors());
 				pstmt.setDouble(3, getPrice());
 				pstmt.setBoolean(4, isGarden());
-				pstmt.executeQuery();
+				pstmt.executeUpdate();
 				
 				ResultSet rs = pstmt.getGeneratedKeys();
-
+				
+				isFlag = false;
 				rs.close();
 				pstmt.close();
 			} else {
-				String updateSQL = "UPDATE houses SET floors = ?, price = ?, garden = ? WHERE fk_estate_id = ?";
+				String updateSQL = "UPDATE houses SET number_of_floors = ?, price = ?, garden = ? WHERE fk_estate_id = ?";
 				PreparedStatement psmst = con.prepareStatement(updateSQL);
 				
 				psmst.setInt(1, getNumberOfFloors());
 				psmst.setDouble(2, getPrice());
 				psmst.setBoolean(3, isGarden());
-				psmst.setInt(4, getFkMaklerId());
+				psmst.setInt(4, getId());
+				psmst.executeUpdate();
 				
+				isFlag = true;
 				psmst.close();
 			}
 			

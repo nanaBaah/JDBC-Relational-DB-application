@@ -16,7 +16,8 @@ public class Estate {
 	private String street;
 	private int streetNumber;
 	private double squareArea;
-	
+	protected Boolean isFlag = false;
+
 	public int getId() {
 		return id;
 	}
@@ -116,11 +117,13 @@ public class Estate {
 				pstmt.setInt(4, getStreetNumber());
 				pstmt.setDouble(5, getSquareArea());
 				pstmt.setInt(6, getFkMaklerId());
-				pstmt.executeQuery();
+				pstmt.executeUpdate();
 				
 				ResultSet rs = pstmt.getGeneratedKeys();
 				if (rs.next()) {
 					setId(rs.getInt(1));
+					
+					isFlag = true;
 				} 
 				
 				rs.close();
@@ -136,7 +139,10 @@ public class Estate {
 				pstmt.setInt(4, getStreetNumber());
 				pstmt.setDouble(5, getSquareArea());
 				pstmt.setInt(6, getFkMaklerId());
-				pstmt.executeQuery();
+				pstmt.setInt(7, getId());
+				pstmt.executeUpdate();
+				
+				isFlag = false;
 				
 				pstmt.close();
 			}

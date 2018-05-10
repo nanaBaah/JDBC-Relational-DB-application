@@ -80,14 +80,14 @@ public class Person {
 		
 		try {
 			if (getId() == -1) {
-				String sql = "INSERT INTO persons(first_name, last_name, address) VALUES (?, ?, ?, ?)";
+				String sql = "INSERT INTO persons(first_name, last_name, address) VALUES (?, ?, ?)";
 				
 				PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				
 				pstmt.setString(1, getFirstName());
 				pstmt.setString(2, getLastName());
 				pstmt.setString(3, getAddress());
-				pstmt.executeQuery();
+				pstmt.executeUpdate();
 				
 				ResultSet rs = pstmt.getGeneratedKeys();
 				
@@ -105,7 +105,9 @@ public class Person {
 				pstmt.setString(2, getAddress());
 				pstmt.setString(3, getAddress());
 				
-				pstmt.executeQuery();
+				pstmt.setInt(4, getId());
+				
+				pstmt.executeUpdate();				
 				pstmt.close();
 
 			}

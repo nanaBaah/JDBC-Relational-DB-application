@@ -14,12 +14,14 @@ public class MainMenu {
 		//Menüoptionen
 		final int MENU_MAKLER = 1;
 		final int MENU_ESTATE = 2;
+		final int MENU_CONTRACT = 3;
 		final int QUIT = 0;
 		
 		//Erzeuge Menü
 		Menu mainMenu = new Menu("Main Menu");
-		mainMenu.addEntry("Estate Agent Management", MENU_MAKLER);			
+		mainMenu.addEntry("Estate Agent Management", MENU_MAKLER);
 		mainMenu.addEntry("Estate Management", MENU_ESTATE);
+		mainMenu.addEntry("Contract Management", MENU_CONTRACT);
 		mainMenu.addEntry("Quit", QUIT);
 		
 		//Verarbeite Eingabe												// Process input
@@ -47,6 +49,9 @@ public class MainMenu {
 					} else {
 						System.out.println("Wrong login info");
 					}
+					break;
+				case MENU_CONTRACT:
+					ContractMenu.show();
 					break;
 				case QUIT:
 					return;

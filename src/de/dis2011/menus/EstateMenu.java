@@ -1,6 +1,8 @@
 package de.dis2011.menus;
 
+import de.dis2011.FormUtil;
 import de.dis2011.Menu;
+import de.dis2011.data.Apartment;
 import de.dis2011.data.House;
 import de.dis2011.data.Makler;
 
@@ -66,32 +68,77 @@ public class EstateMenu {
 		house.update(makler.getId());
 		house.save();
 
-		System.out.println(house);
+		System.out.println(house.toString());
 	}
 
-	private static void editHouse() {
+	private void editHouse() {
+		int id = FormUtil.readInt("House id");
+		
+		House house = House.load(id);
+		if (house == null) {
+			System.out.println("Cannot find house with ID : " + id);
+		} else {
+			System.out.println(house.toString());
+			System.out.println("Update information: ");
+			
+			house.update(makler.getId());
+			house.save();
+			System.out.println(house.toString());
+		}
+	}
+
+	private void removeHouse() {
 		// TODO Auto-generated method stub
+		 int id = FormUtil.readInt("House Id");
+
+	        if (House.delete(id)) {
+	            System.out.println("House with the id " + id + " was deleted.");
+	        } else {
+	            System.out.println("Failed to delete house with the id " + id + ".");
+	        }
+	}
+
+	private void newApartment() {
+		// TODO Auto-generated method stub
+		Apartment apartment = new Apartment();
+
+        apartment.update(makler.getId());
+        apartment.save();
+
+        System.out.println("Apartment with the id " + apartment.getId() + " was created.");
 
 	}
 
-	private static void removeHouse() {
+	private void editApartment() {
 		// TODO Auto-generated method stub
+		int id = FormUtil.readInt("Apartment Id");
+
+        Apartment apartment = Apartment.load(id);
+
+        if (apartment == null) {
+            System.out.println("Cannot find apartment with the id " + id);
+        } else {
+            System.out.println(apartment.toString());
+
+            System.out.println("Enter the new values:");
+
+            apartment.update(makler.getId());
+            apartment.save();
+
+            System.out.println("Apartment id " + apartment.getId() + " is changed.");
+        }
 
 	}
 
-	private static void newApartment() {
+	private void removeApartment() {
 		// TODO Auto-generated method stub
+		int id = FormUtil.readInt("Apartment Id");
 
-	}
-
-	private static void editApartment() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static void removeApartment() {
-		// TODO Auto-generated method stub
-
+        if (Apartment.delete(id)) {
+            System.out.println("Apartment id " + id + " is deleted.");
+        } else {
+            System.out.println("Failed to delete apartment id " + id + ".");
+        }
 	}
 
 }
