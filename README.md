@@ -5,7 +5,7 @@ In this assignment you will develop a DB-backed Java application for management 
 
 In this assignment you will develop a DB-backed Java application for management of real estates. This is the domain model:
 
-![Alt tex](/img.jpg)
+![UML Diagram](https://user-images.githubusercontent.com/12661590/39948822-fdce41e0-5577-11e8-9808-e8e5ef1ea10a.JPG)
 
 The central entity is an estate agent that manages estates. It has a unique login name as well as a password.
 There are two basic types of estates: houses and apartments. Apartments are rented, whereas houses are sold. 
